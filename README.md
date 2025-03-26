@@ -22,7 +22,8 @@ Spring @Transactional 中消息队列提前发送的问题分析
 
 1. 使用事务同步管理器（推荐）
 
-`@Transactional
+```java
+@Transactional
 public void process() {
 // 数据库操作
 dao.save(data);
@@ -37,10 +38,12 @@ dao.save(data);
             }
         }
     );
-}`
+}
+```
 
 2. 使用Spring的 TransactionTemplate
 
+```java
 transactionTemplate.execute(status -> {
 // 数据库操作
 dao.save(data);
@@ -54,6 +57,9 @@ dao.save(data);
     });
     return null;
 });
+```
+
+
 
 3. 使用事务发件箱模式（Transactional Outbox）
 
